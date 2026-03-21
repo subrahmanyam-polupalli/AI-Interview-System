@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Result</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-card">
+      <div class="brand">Interview Result</div>
+      <h1>Your Score: {{ score }} / 10</h1>
+      <p class="lead">Role: {{ role }}</p>
+
+      <div class="dashboard-grid" style="margin-top:22px;">
+        <div class="stat">
+          <h3>Performance</h3>
+          <div class="value">{{ score }}/10</div>
+        </div>
+        <div class="stat">
+          <h3>Status</h3>
+          <div class="value">{% if score >= 8 %}Strong{% elif score >= 5 %}Good{% else %}Needs Work{% endif %}</div>
+        </div>
+        <div class="stat">
+          <h3>Next Step</h3>
+          <div class="value">Review</div>
+        </div>
+      </div>
+
+      <pre class="feedback">{{ feedback }}</pre>
+
+      <div class="actions">
+        <a class="btn primary" href="/retry">Retry Interview</a>
+        <a class="btn secondary" href="/dashboard">View Dashboard</a>
+        <a class="btn dark" href="/">Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

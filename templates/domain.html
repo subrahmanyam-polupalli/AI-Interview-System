@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Role</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="form-wrap">
+    <div class="form-card" style="max-width:980px; width:min(980px, calc(100% - 32px));">
+      <h1 style="font-size:34px; margin-bottom:8px;">Choose your interview domain</h1>
+      <p class="small-note">Drag a role into the box or click a role card to select it.</p>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form id="domainForm" method="post" class="form-grid" style="max-width:none;">
+        <input type="hidden" name="role" id="roleInput">
+
+        <div id="dropzone" class="dropzone">
+          <div>
+            <div style="font-size:18px; font-weight:700;">Drop selected role here</div>
+            <div class="small-note" id="selectedRoleText" style="margin-top:6px;">No role selected yet</div>
+          </div>
+        </div>
+
+        <div class="role-grid">
+          {% for domain in domains %}
+          <div class="role-card" draggable="true" data-role="{{ domain }}">
+            <div style="font-weight:800; font-size:16px;">{{ domain }}</div>
+            <div class="small-note" style="margin-top:6px;">Drag me or click to select</div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn primary" style="width:100%; margin-top:8px;">Proceed to Ready Page</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll(".role-card");
+    const dropzone = document.getElementById("dropzone");
+    const roleInput = document.getElementById("roleInput");
+    const selectedRoleText = document.getElementById("selectedRoleText");
+
+    function selectRole(role){
+      roleInput.value = role;
+      selectedRoleText.textContent = "Selected: " + role;
+      cards.forEach(c => c.classList.remove("selected"));
+      cards.forEach(c => {
+        if (c.dataset.role === role) c.classList.add("selected");
+      });
+    }
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => selectRole(card.dataset.role));
+      card.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", card.dataset.role);
+      });
+    });
+
+    dropzone.addEventListener("dragover", e => e.preventDefault());
+    dropzone.addEventListener("drop", e => {
+      e.preventDefault();
+      const role = e.dataTransfer.getData("text/plain");
+      selectRole(role);
+    });
+
+    document.getElementById("domainForm").addEventListener("submit", function(e){
+      if(!roleInput.value){
+        e.preventDefault();
+        alert("Please select a role first.");
+      }
+    });
+  </script>
+</body>
+</html>

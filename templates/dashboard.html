@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container" style="padding:22px 0 34px;">
+    <div class="topbar">
+      <div>
+        <div class="brand">{{ title }}</div>
+        <div style="font-size:28px; font-weight:800; margin-top:8px;">{{ subtitle }}</div>
+      </div>
+      <div class="nav-links">
+        {% if view_mode == "admin" %}
+        <a class="btn dark" href="/dashboard">My Dashboard</a>
+        {% else %}
+        <a class="btn secondary" href="/interview">New Interview</a>
+        {% endif %}
+        <a class="btn danger" href="/logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="stat">
+        <h3>Total Interviews</h3>
+        <div class="value">{{ results|length }}</div>
+      </div>
+      <div class="stat">
+        <h3>Latest Score</h3>
+        <div class="value">{{ scores[0] if scores else 0 }}</div>
+      </div>
+      <div class="stat">
+        <h3>View Mode</h3>
+        <div class="value">{{ view_mode|title }}</div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-bottom:18px;">
+      <canvas id="scoreChart"></canvas>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            {% if view_mode == "admin" %}
+            <th>User ID</th>
+            {% endif %}
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+          <tr>
+            <td>{{ r["id"] }}</td>
+            {% if view_mode == "admin" %}
+            <td>{{ r["user_id"] }}</td>
+            {% endif %}
+            <td>{{ r["name"] }}</td>
+            <td>{{ r["email"] }}</td>
+            <td>{{ r["role"] }}</td>
+            <td>{{ r["score"] }}</td>
+            <td>{{ r["created_at"] }}</td>
+            <td>{{ r["feedback"] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const scores = {{ scores|tojson }};
+    const dates = {{ dates|tojson }};
+    const ctx = document.getElementById("scoreChart");
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: dates,
+        datasets: [{
+          label: "Interview Score",
+          data: scores,
+          tension: 0.35
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
+        },
+        scales: {
+          y: { beginAtZero: true, suggestedMax: 10 }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

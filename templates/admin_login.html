@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="form-wrap">
+    <div class="form-card" style="max-width:460px;">
+      <div class="brand">Admin Access</div>
+      <h1 style="font-size:30px;">Enter admin password</h1>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" class="form-grid">
+        <div>
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Admin password" required>
+        </div>
+        <button type="submit" class="btn primary" style="width:100%;">Login</button>
+      </form>
+      <div class="actions" style="margin-top:14px;">
+        <a class="btn dark" href="/">Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
