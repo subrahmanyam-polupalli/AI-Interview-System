@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Interview Result</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+.container{
+margin-top:150px;
+}
+
+.score{
+font-size:60px;
+color:#22c55e;
+}
+
+.feedback{
+margin-top:20px;
+font-size:18px;
+color:#eab308;
+}
+
+button{
+margin-top:30px;
+padding:12px 20px;
+font-size:16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#3b82f6;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Your Interview Score</h1>
+
+<div class="score">
+{{score}} / 10
+</div>
+
+<div class="feedback">
+
+{% if score >=8 %}
+
+Excellent performance. Strong understanding of concepts.
+
+{% elif score >=5 %}
+
+Good attempt. Improve technical explanations.
+
+{% else %}
+
+Needs improvement. Try to include more technical points.
+
+{% endif %}
+
+</div>
+
+<br>
+
+<a href="/dashboard">
+<button>View Dashboard</button>
+</a>
+
+</div>
+
+</body>
+</html>

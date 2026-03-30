@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Interview</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+#avatarContainer{
+width:100%;
+height:400px;
+}
+
+.container{
+width:80%;
+margin:auto;
+margin-top:20px;
+}
+
+#questionBox{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+font-size:20px;
+}
+
+textarea{
+width:100%;
+height:120px;
+border-radius:6px;
+border:none;
+padding:10px;
+font-size:16px;
+}
+
+button{
+margin-top:15px;
+padding:12px 20px;
+font-size:16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.submit{
+background:#22c55e;
+color:white;
+}
+
+.voice{
+background:#3b82f6;
+color:white;
+margin-right:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>AI Interviewer</h1>
+
+<div id="avatarContainer"></div>
+
+<div class="container">
+
+<div id="questionBox">
+Loading question...
+</div>
+
+<textarea id="answer" placeholder="Type or speak your answer here..."></textarea>
+
+<br>
+
+<!-- LEFT = SPEAK | RIGHT = SUBMIT -->
+
+<button class="voice" onclick="startVoice()">🎤 Speak</button>
+
+<button class="submit" onclick="submitAnswer()">Submit</button>
+
+</div>
+
+
+<script src="/static/js/avatar.js"></script>
+
+<script>
+
+let recognition;
+
+
+// ========================
+// LOAD QUESTION
+// ========================
+
+async function loadQuestion(){
+
+const res = await fetch("/get_question");
+
+const data = await res.json();
+
+if(data.finished){
+
+window.location.href="/result";
+return;
+
+}
+
+document.getElementById("questionBox").innerText = data.question;
+
+
+// avatar speaks question
+speak(data.question);
+
+
+// auto voice recording after avatar speaks
+setTimeout(()=>{
+
+startVoice();
+
+},3000);
+
+}
+
+loadQuestion();
+
+
+// ========================
+// SUBMIT ANSWER
+// ========================
+
+async function submitAnswer(){
+
+let answer = document.getElementById("answer").value;
+
+await fetch("/submit_answer",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({answer:answer})
+
+});
+
+document.getElementById("answer").value="";
+
+loadQuestion();
+
+}
+
+
+// ========================
+// VOICE INPUT
+// ========================
+
+function startVoice(){
+
+if(!('webkitSpeechRecognition' in window)){
+
+alert("Voice not supported in this browser");
+
+return;
+
+}
+
+recognition = new webkitSpeechRecognition();
+
+recognition.lang="en-US";
+
+recognition.start();
+
+recognition.onresult=function(event){
+
+let transcript = event.results[0][0].transcript;
+
+document.getElementById("answer").value = transcript;
+
+};
+
+}
+
+</script>
+
+</body>
+</html>

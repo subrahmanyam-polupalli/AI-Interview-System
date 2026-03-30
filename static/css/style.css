@@ -1,0 +1,163 @@
+body{
+margin:0;
+padding:0;
+font-family:Arial, Helvetica, sans-serif;
+
+background:linear-gradient(to right,#020024,#090979,#000);
+
+color:white;
+text-align:center;
+}
+
+/* MENU */
+
+.menu{
+position:fixed;
+top:20px;
+left:20px;
+font-size:28px;
+cursor:pointer;
+z-index:1000;
+}
+
+/* SIDEBAR */
+
+#sidebar{
+position:fixed;
+left:-220px;
+top:0;
+width:220px;
+height:100%;
+background:#111;
+padding-top:60px;
+transition:0.3s;
+}
+
+#sidebar a{
+display:block;
+padding:15px;
+color:white;
+text-decoration:none;
+}
+
+#sidebar a:hover{
+background:#575757;
+}
+
+/* START PAGE */
+
+.start-container{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.start-container h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.start-container p{
+font-size:20px;
+margin-bottom:25px;
+}
+
+/* MAIN CONTAINER */
+
+.main-container{
+margin-top:70px;
+}
+
+/* TITLE */
+
+.title{
+font-size:32px;
+margin-bottom:30px;
+}
+
+/* AVATAR */
+
+#avatar{
+width:500px;
+height:350px;
+margin:auto;
+margin-bottom:30px;
+}
+
+/* QUESTION */
+
+#questionBox{
+font-size:20px;
+margin-top:10px;
+margin-bottom:25px;
+}
+
+/* ANSWER BOX */
+
+textarea{
+width:420px;
+height:120px;
+border-radius:8px;
+border:none;
+padding:12px;
+font-size:15px;
+resize:none;
+outline:none;
+}
+
+/* BUTTONS */
+
+button{
+margin-top:15px;
+margin-right:10px;
+padding:10px 22px;
+border:none;
+border-radius:6px;
+background:#28a745;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1f7a33;
+}
+
+/* RESULT PAGE */
+
+.result-container{
+margin-top:120px;
+text-align:center;
+}
+
+.result-container h1{
+font-size:36px;
+margin-bottom:20px;
+}
+
+.result-container h2{
+font-size:42px;
+margin-bottom:25px;
+}
+
+.result-buttons{
+margin-top:30px;
+}
+
+.result-buttons button{
+padding:12px 26px;
+margin:10px;
+font-size:16px;
+border:none;
+border-radius:6px;
+background:#28a745;
+color:white;
+cursor:pointer;
+}
+
+.result-buttons button:hover{
+background:#1f7a33;
+}

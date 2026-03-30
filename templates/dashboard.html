@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Interview Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+.container{
+width:80%;
+margin:auto;
+margin-top:40px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+}
+
+th,td{
+padding:12px;
+border:1px solid #444;
+}
+
+th{
+background:#1e293b;
+}
+
+button{
+padding:10px 20px;
+margin:10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.retry{
+background:#22c55e;
+color:white;
+}
+
+.home{
+background:#3b82f6;
+color:white;
+}
+
+.logout{
+background:#ef4444;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Interview Dashboard</h1>
+
+<canvas id="scoreChart"></canvas>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Score</th>
+</tr>
+
+{% for r in results %}
+
+<tr>
+<td>{{r["id"]}}</td>
+<td>{{r["name"]}}</td>
+<td>{{r["email"]}}</td>
+<td>{{r["score"]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div>
+
+<a href="/retry">
+<button class="retry">Retry Interview</button>
+</a>
+
+<a href="/">
+<button class="home">Home</button>
+</a>
+
+<a href="/logout">
+<button class="logout">Logout</button>
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+const scores={{scores|tojson}};
+const dates={{dates|tojson}};
+
+const ctx=document.getElementById("scoreChart");
+
+new Chart(ctx,{
+type:"line",
+data:{
+labels:dates,
+datasets:[{
+label:"Interview Scores",
+data:scores,
+borderColor:"#22c55e",
+backgroundColor:"rgba(34,197,94,0.2)",
+fill:true,
+tension:0.3
+}]
+}
+});
+
+</script>
+
+</body>
+</html>
