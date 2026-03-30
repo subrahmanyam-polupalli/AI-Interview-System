@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# AI Interview System 🤖
+# AI Interview System 
 
 An AI-based interview practice platform with:
 - Avatar interviewer
